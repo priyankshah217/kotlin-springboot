@@ -14,6 +14,7 @@ import org.springframework.http.MediaType
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
 import java.util.*
@@ -22,10 +23,13 @@ import java.util.*
 @WebMvcTest
 @AutoConfigureDataJpa
 @AutoConfigureTestDatabase
-class CustomerControllerTest {
+class ControllerTest {
 
     @MockkBean
     lateinit var customerService: CustomerService
+
+    @MockkBean
+    lateinit var quoteService: QuoteService
 
     @Autowired
     lateinit var mockMvc: MockMvc
@@ -61,6 +65,17 @@ class CustomerControllerTest {
         ).andExpect(jsonPath("$.id", Is(equalTo(customer.id))))
                 .andExpect(jsonPath("$.customerName", Is(equalTo(customer.customerName))))
                 .andExpect(jsonPath("$.customerAddress", Is(equalTo(customer.customerAddress))))
-                .andExpect(status().isOk)
+                .andExpect(status().is2xxSuccessful)
     }
+
+    @Test
+    fun getRandomQuote() {
+        every { quoteService.getQuote() }.returns(RandomQuoteResponse("Random Author", "Random Quote"))
+        mockMvc.perform(
+                get("/quote")
+        ).andExpect(MockMvcResultMatchers.status().isOk)
+                .andExpect(MockMvcResultMatchers.content().string("Random Quote"))
+                .andExpect(MockMvcResultMatchers.status().is2xxSuccessful)
+    }
+
 }
