@@ -1,3 +1,9 @@
+buildscript {
+    dependencies {
+        classpath('gradle.plugin.com.palantir.gradle.docker:gradle-docker:0.22.1')
+    }
+}
+
 import org.jetbrains.kotlin.gradle.tasks.*
 plugins {
     id 'org.springframework.boot' version '2.1.4.RELEASE'
@@ -8,6 +14,7 @@ plugins {
     id "org.jetbrains.kotlin.plugin.allopen" version "1.2.71"
     id "org.jetbrains.kotlin.kapt" version "1.2.71"
     id "io.spring.dependency-management" version "1.0.7.RELEASE"
+    id "com.palantir.docker" version "0.22.1"
 }
 
 group = 'com.springboot'
@@ -21,13 +28,10 @@ allOpen {
 }
 
 repositories {
+    jcenter()
     mavenCentral()
 }
 
-bootJar {
-    archivesBaseName = 'springboot-jpa-mysql'
-    version = '0.0.1'
-}
 ext {
     set('springCloudVersion', "Greenwich.SR1")
 }
@@ -62,9 +66,24 @@ dependencies {
     testImplementation group: 'com.github.tomakehurst', name: 'wiremock', version: '2.23.2', ext: 'pom'
 }
 
+bootJar {
+    archivesBaseName = 'spring-boot-kotlin'
+    version = 'latest'
+}
+
+docker {
+    name "hub.docker.com/priyankshah217/spring-boot-kotlin:$project.version"
+//    tag "latest","hub.docker.com/priyankshah217/$project.name:$project.version"
+    dependsOn build as Task
+    files bootJar
+//    dockerfile file('Dockerfile')
+    buildArgs([BUILD_VERSION: project.version] as Map<String, String>)
+}
+
 test {
     useJUnitPlatform()
 }
+
 
 tasks.withType(KotlinCompile) {
     kotlinOptions {
