@@ -9,16 +9,7 @@ import org.springframework.web.bind.annotation.RestController
 import javax.validation.Valid
 
 @RestController
-class CustomerController {
-
-    var quoteService: QuoteService
-    var customerService: CustomerService
-
-    @Autowired
-    constructor(quoteService: QuoteService, customerService: CustomerService) {
-        this.quoteService = quoteService
-        this.customerService = customerService
-    }
+class CustomerController @Autowired constructor(var quoteService: QuoteService, var customerService: CustomerService) {
 
     @GetMapping("/all")
     fun allCustomers(): List<Customer> {
@@ -26,8 +17,8 @@ class CustomerController {
     }
 
     @GetMapping("/quote")
-    fun getQuote(): String {
-        return quoteService.getQuote().quoteText
+    fun getQuote(): ResponseEntity<String> {
+        return ResponseEntity.ok(quoteService.getQuote().quoteText)
     }
 
     @PostMapping("/create")
