@@ -63,8 +63,8 @@ dependencies {
 
 docker {
     def accountID = System.getenv("AWS_ACCOUNT_ID")
-    def ebRegion = System.getenv("EB_REGION")
-    name "$accountID" + (".dkr.ecr." + "$ebRegion" + ".amazonaws.com/priyankshah217/$bootJar.baseName")
+    def region = System.getenv("AWS_DEFAULT_REGION")
+    name "$accountID" + (".dkr.ecr." + "$region" + ".amazonaws.com/priyankshah217/$bootJar.baseName")
     tag "awsRegistry", "$accountID" + ".dkr.ecr.ap-southeast-1.amazonaws.com/priyankshah217/kotlindemo"
     dependsOn build as Task
     files bootJar.archivePath
