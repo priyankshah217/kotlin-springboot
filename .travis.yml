@@ -9,6 +9,7 @@ before_cache:
   - rm -fr $HOME/.gradle/caches/*/plugin-resolution/
 cache:
   directories:
+    - "$HOME/.local"
     - "$HOME/.gradle/caches/"
     - "$HOME/.gradle/wrapper/"
 env:
@@ -18,7 +19,7 @@ env:
     - secure: lRCVG+mB8jGv3QPVVkWH/3I93Xm39YbB0zEkMJ4SXe7JsX66cuDHFCVMY4Eqnxr4LEJVfiRNlPrL3r5YajzQDDBbnPPL0whoY1uT4Cdyd8oUDblK0EMdKeLsqRpwRLG4Nwp7Z7TwrW3TqOHGyPhYZ8MPyrzK3VtQguWgP6xHTA7B4OsFOCgvvf89Sgn7FfC2syoCcn+3vKFR7V/VyXUbOgJzG7aQUPTs7Pfp2jfM9vHm1rarxLqCKy6zEYy2auusfGZqZ8GO8AhPoDSNTNYjsVx5Pi5sTMEGYwHMGwGEIOU6TtCcs4OkPx3dFsb4OeIwAyE/rMjJH7zSmRda/VcCUR++2zgjSneu5K3SZmcRspDIbJQVWegsYmqwFAKwQ8vwmTut5vCM95L642syhYh38naq129T05b516W/VfA1SusqJJJ1x29wz2aGtz+GP5MPwA9eO6xO+UXDpD4JUd9xAgFyVORddIxjp4mIUgY8gpGwjrAnP+v4SX5+1Uz8i1N8Q/pSdZZBDjkyQ1i97M1/+YFVE2QKEKjnn2s/jD5sb+1jauvC+K51gzr6CJ8REU36qJS9Rz5a9QLop/Fw+Oik9s7Fjta3pV0TqUXmfDSFU0OUVVdaX0O9vGscLLG8y4Ocf0UIUs7pc7dPqlDFDkv9Vpxw7rh9+j8Iu/0Msi/RtyU=
     - secure: BhBmDPUzrHftFmIaUbpIMGq3y1Zg5BD98plZRX/5aZ70RQajHGKziTnvaxSaUBTfQeGQHuSc3zTLTmLhHK/F+z9D8oQgkExmIG9t2Ptz9kWeKlk1SokO3a85eT27iYsotYCemaALNbezwjSJFceESD/OPS3M7KaSoFFzv9qogJnHIYsb21JH+9mD7uzkkbfPk5J8MoDWKfQkr7u4GHc7YiuDTlUzzA0qInuU9HvIYYxRD6DLz2lrZ7px/UN4/SB7FUn0I9MdcVW3nzJP2GPpPipp0pLquVLYDvUEl6w8mOGQxhLIzpNDQncL18u5P0EFanU9P679ADv9ziZSpGNWPepxeORMAi+NqkxDhc/GVaUp69uBqZMbXle7fkGRcUWmTR5OBaC4BoDKYr4paQu/bM0t0BGbxe3ThDl6hyKiOa1kNryuN1LLk/wrMvm9QI6ALXgS9rvkc+LAG6FwCt4o7SFfzYaDQmIaQ0h1YUDMdUHWDu3qWFZfoGJNZtQquRsJCh+KjK9eh4dUY2CYqO4SOTj3PQFRnpReWfQdeeJP1GuPlZld9O1E0ce4dhWgkWAck7zCFMa8zggQrHvwgC9dnzKjgEBExMHm28l51Rf+hApB6DOUYqTNOOfErqOarFl7LIYyzXfDy9zKh5yMVawrIBYFFPE/1lic+IshErCn1v4=
 before_install:
-  - pip install awscli
+  - pip install --user awscli
   - export PATH=$PATH:$HOME/.local/bin
 before_script:
   - chmod +x gradlew
