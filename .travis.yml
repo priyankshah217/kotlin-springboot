@@ -23,9 +23,10 @@ before_install:
   - export PATH=$PATH:$HOME/.local/bin
 before_script:
   - chmod +x gradlew
-  - aws configure set aws_access_key_id $AWS_ACCESS_KEY_ID
-  - aws configure set aws_secret_access_key $AWS_SECRET_ACCESS_KEY
-  - aws configure set region $EB_REGION
+  - echo "${AWS_ACCESS_KEY_ID}"
+  - aws configure set aws_access_key_id ${AWS_ACCESS_KEY_ID}
+  - aws configure set aws_secret_access_key ${AWS_SECRET_ACCESS_KEY}
+  - aws configure set region ${EB_REGION}
   - $(aws ecr get-login --no-include-email)
 script:
   - "./gradlew clean dockerPush"
