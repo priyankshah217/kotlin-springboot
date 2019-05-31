@@ -1,5 +1,4 @@
 import org.jetbrains.kotlin.gradle.tasks.*
-
 plugins {
     id 'org.springframework.boot' version '2.1.4.RELEASE'
     id 'org.jetbrains.kotlin.jvm' version '1.2.71'
@@ -63,7 +62,10 @@ dependencies {
 }
 
 docker {
-    name "priyankshah217/$bootJar.baseName"
+    def accountID = System.getenv("AWS_ACCOUNT_ID")
+    def ebRegion = System.getenv("EB_REGION")
+    name "$accountID" + (".dkr.ecr." + "$ebRegion" + ".amazonaws.com/priyankshah217/$bootJar.baseName")
+    tag "awsRegistry", "$accountID" + ".dkr.ecr.ap-southeast-1.amazonaws.com/priyankshah217/kotlindemo"
     dependsOn build as Task
     files bootJar.archivePath
     buildArgs(['JAR_FILE': bootJar.archiveName])
